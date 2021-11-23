@@ -1,7 +1,2 @@
-# Marathon eredményeit elemző kiértékelés
+# BSZM eredményeit elemző kiértékelés
 
-asdasd
-
-
-* ASd
-* asd2
