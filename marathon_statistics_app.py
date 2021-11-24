@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from datetime import timedelta
+from datetime import date
 
 static_path = './dataset/csv/'
 st.set_page_config(page_title="Running analysis", page_icon="./static/images/running.png", menu_items={
@@ -34,6 +35,8 @@ def load_data(year):
     bszm['Hely.'] = bszm['Hely.'].astype(int)
     bszm['sz.év.'] = bszm['sz.év.'].replace(NaN, 9999)
     bszm['sz.év.'] = bszm['sz.év.'].astype(int)
+    bszm['curryear'] = date.today().year
+    bszm['kor'] = bszm['curryear'] - bszm['sz.év.']
     bszm.drop(['rajtszám', 'kat.h.'], axis = 1, inplace=True)    
     bszm.drop(['1.nap/1.idõ', '1.nap/2.idõ', '1.nap/3.idõ', '2.nap/1.idõ', '2.nap/2.idõ', '2.nap/3.idõ', '3.nap /1.idõ', '3.nap/2.idõ', '3.nap/3.idõ', '4.nap/1.idõ', '4.nap/2.idõ', '4.nap/3.idõ'], axis = 1, inplace=True)
     bszm["befejezte"] = np.where(bszm['Megtett táv (km)'] < bszm['Megtett táv (km)'].max(), False, True)
@@ -61,3 +64,4 @@ df = load_data(selected_year)
 st.header('Résztvevők eredményei')
 st.write('Dimenziók: ' + str(df.shape[0]) + ' sor és ' + str(df.shape[1]) + ' oszlop')
 st.dataframe(df.astype('object'))
+
