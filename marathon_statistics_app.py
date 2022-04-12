@@ -44,6 +44,15 @@ if (selected == 'Dashboard'):
      st.dataframe(df.astype('object'))
      
      
+    c1, c2, c3 =  st.columns(3)
+    with c1:
+        d = {'year', 'competitors'}
+        d['year'] = [2021]
+        d['competitors'] =[23]
+        data = pd.Dataframe(data=d)
+        st.line_chart(data)
+     
+     
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
         st.empty()
@@ -57,6 +66,7 @@ if (selected == 'Dashboard'):
 
     with col3:
         st.caption("Finished race")
+        df['finished'].value_counts()
         my_labels = 'Finished', 'Failed'
         fig1, ax1 = plt.subplots()
         ax1.pie(df['finished'].value_counts(), labels=my_labels)
