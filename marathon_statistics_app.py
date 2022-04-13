@@ -46,17 +46,39 @@ if (selected == 'Dashboard'):
      
     c1, c2, c3 =  st.columns(3)
     with c1:
-        d = {'year', 'competitors'}
-        d['year'] = [2021]
-        d['competitors'] =[23]
-        data = pd.Dataframe(data=d)
-        st.line_chart(data)
-     
-     
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.empty()
+        yearly = {
+            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
+            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
+        }
+        data = pd.DataFrame(yearly)
         
+        fig, ax = plt.subplots()
+        ax.plot(yearly['Year'], yearly['Attendants'])
+        st.pyplot(fig)
+    with c2:
+        yearly = {
+            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
+            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
+        }
+        data = pd.DataFrame(yearly)
+        
+        fig, ax = plt.subplots()
+        ax.plot(yearly['Year'], yearly['Attendants'])
+        st.pyplot(fig)
+    with c3:
+        yearly = {
+            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
+            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
+        }
+        data = pd.DataFrame(yearly)
+        
+        fig, ax = plt.subplots()
+        ax.hist(yearly['Year'], yearly['Attendants'])
+        st.pyplot(fig)
+     
+     
+    col2, col3, col4 = st.columns(3)
+
     with col2:
         st.caption("Competitors sex")
         my_labels = 'Male', 'Female'
@@ -77,5 +99,72 @@ if (selected == 'Dashboard'):
         fig1, ax1 = plt.subplots()
         ax1.pie(df['Category'].value_counts(), labels=my_labels)
         st.pyplot(fig1)
-    with col5:
-        st.empty()
+        
+
+if (selected == 'Statistics'):
+    selected_year = st.selectbox('Year', event_list)
+    df = load_data(selected_year)
+    with st.expander("Individual results dataset"):
+     st.write("""
+         The chart above shows some numbers I picked for you.
+         I rolled actual dice for these, so they're *guaranteed* to
+         be random.
+     """)
+     st.dataframe(df.astype('object'))
+     
+     
+    c1, c2, c3 =  st.columns(3)
+    with c1:
+        yearly = {
+            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
+            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
+        }
+        data = pd.DataFrame(yearly)
+        
+        fig, ax = plt.subplots()
+        ax.plot(yearly['Year'], yearly['Attendants'])
+        st.pyplot(fig)
+    with c2:
+        yearly = {
+            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
+            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
+        }
+        data = pd.DataFrame(yearly)
+        
+        fig, ax = plt.subplots()
+        ax.plot(yearly['Year'], yearly['Attendants'])
+        st.pyplot(fig)
+    with c3:
+        yearly = {
+            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
+            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
+        }
+        data = pd.DataFrame(yearly)
+        
+        fig, ax = plt.subplots()
+        ax.plot(yearly['Year'], yearly['Attendants'])
+        st.pyplot(fig)
+     
+     
+    col2, col3, col4 = st.columns(3)
+
+    with col2:
+        st.caption("Competitors sex")
+        my_labels = 'Male', 'Female'
+        fig1, ax1 = plt.subplots()
+        ax1.pie(df['Gender'].value_counts(), labels=my_labels)
+        st.pyplot(fig1)
+
+    with col3:
+        st.caption("Finished race")
+        df['finished'].value_counts()
+        my_labels = 'Finished', 'Failed'
+        fig1, ax1 = plt.subplots()
+        ax1.pie(df['finished'].value_counts(), labels=my_labels)
+        st.pyplot(fig1)
+    with col4:
+        st.caption("Competitors age category")
+        my_labels = 'Male 18-27', 'Male 28-39', 'Male 40-50', 'Male 51-59', 'Male 60+', 'Female 18-27', 'Female 28-39', 'Female 40-55', 'Female 55+'
+        fig1, ax1 = plt.subplots()
+        ax1.pie(df['Category'].value_counts(), labels=my_labels)
+        st.pyplot(fig1)
