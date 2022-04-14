@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-local_path = '/Users/csizi/Development/marathon_statistics/dataset/csv/bszm_2008_2020/'
+local_path = 'dataset/csv/bszm_2008_2020/'
 
 bszm = pd.read_csv(local_path + 'bszm_cleaned.csv', encoding = "utf8", 
                         sep=';', header=0)
