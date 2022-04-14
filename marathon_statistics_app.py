@@ -7,6 +7,14 @@ import base64
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import flag
+import pycountry
+
+from time import gmtime
+from time import strftime
+
+def calculate_time_column_back(row):
+    return strftime("%H:%M:%S", gmtime(row))
 
 local_path = 'dataset/csv/bszm_2008_2020/'
 
@@ -45,8 +53,8 @@ def load_data(year):
     return bszm[bszm['event_year'] == year]
 
 
-selected = option_menu(None, ["Dashboard", "Statistics", "Models", "Prediction", "Upload", 'About'], 
-    icons=['bi-speedometer', 'bar-chart', "cpu", "lightbulb", "upload", "info-circle"], default_index=0, orientation="horizontal")
+selected = option_menu(None, ["Statistics", "Models", "Prediction", "Upload", 'About'], 
+    icons=['bar-chart', "cpu", "lightbulb", "upload", "info-circle"], default_index=0, orientation="horizontal")
 
 
 if (selected == 'Dashboard'):
@@ -61,23 +69,64 @@ if (selected == 'Statistics'):
     stat1, empty, stat2, stat3 = st.columns([4, 0.5, 1, 1])
     
     with stat1:
-        st.dataframe(df[['Placement', 'Name', 'Born', 'Category', 'Country', 'Team', 'City', 'Gender']].astype('object'))
+        st.dataframe(df[['Placement', 'Name', 'Born', 'Category', 'Country', 'Team', 'City', 'Gender', 'Result_normal', 'finished']].astype('object'))
     with stat2:
-        st.metric(label='Competitors', value=str(df.shape[0]) + ' 🏃🏻', delta = get_difference(df, selected_year) if selected_year != 'ALL' else None)
+        st.metric(label='Competitor', value=str(df.shape[0]) + ' 🏃🏻', delta = get_difference(df, selected_year) if selected_year != 'ALL' else None)
     with stat2:
-        st.metric(label='Males', value=str(df[df['Gender'] == 'M'].shape[0]) + ' 🧔🏻‍♂️', delta= get_difference_gender(df[df['Gender'] == 'M'], selected_year, 'M') if selected_year != 'ALL' else None)
+        st.metric(label='Male', value=str(df[df['Gender'] == 'M'].shape[0]) + ' 🧔🏻‍♂️', delta= get_difference_gender(df[df['Gender'] == 'M'], selected_year, 'M') if selected_year != 'ALL' else None)
     with stat3:
-        st.metric(label='Finishers', value=str(df[df['finished'] == True].shape[0]) + ' 🏅', delta = get_difference_finishers(df, selected_year) if selected_year != 'ALL' else None)
+        st.metric(label='Finisher', value=str(df[df['finished'] == True].shape[0]) + ' 🏅', delta = get_difference_finishers(df, selected_year) if selected_year != 'ALL' else None)
     with stat3:
-        st.metric(label='Females', value=str(df[df['Gender'] == 'F'].shape[0]) + ' 👩🏻', delta = get_difference_gender(df[df['Gender'] == 'F'], selected_year, 'F') if selected_year != 'ALL' else None)
+        st.metric(label='Female', value=str(df[df['Gender'] == 'F'].shape[0]) + ' 👩🏻', delta = get_difference_gender(df[df['Gender'] == 'F'], selected_year, 'F') if selected_year != 'ALL' else None)
     with stat2:
-        st.metric(label='Countries', value=str(df['Country'].unique().size) + ' 🇭🇺', delta = get_difference_countries(df, selected_year) if selected_year != 'ALL' else None)
+        st.metric(label='Country', value=str(df['Country'].unique().size) + ' 🏳️', delta = get_difference_countries(df, selected_year) if selected_year != 'ALL' else None)
     with stat3:
-        st.metric(label='Cities', value=str(df['City'].unique().size) + ' 🏘', delta = get_difference_cities(df, selected_year) if selected_year != 'ALL' else None)
+        st.metric(label='City', value=str(df['City'].unique().size) + ' 🏘', delta = get_difference_cities(df, selected_year) if selected_year != 'ALL' else None)
         
+    s1, s2, s3, s4, s5 = st.columns([1,1,1,2,2])
+    topCLub = str(df[df['Team'] != '-'].value_counts().idxmax()[5])
+    topClubCount = df[df['Team'] == topCLub].shape[0]
+    maleCountry= pycountry.countries.get(alpha_3=str(df[(df['Gender'] == 'M') & df['Placement'] == 1].values[0][4]))
+    femaleCountry= pycountry.countries.get(alpha_3=str(df[(df['Gender'] == 'F') & df['Placement'] == 1].values[0][4]))
+    
+    with s1:
+      st.metric(label='Average tempo', value=str(df['average_tempo(minutes/km)'].mean().round(2)) + " m/km")  
+    with s2:
+        st.metric(label='Average result', value=str(calculate_time_column_back(df['Result'].mean())))  
+    with s3:
+        st.metric(label='Club Members', value=str(df[df['Team'] != '-'].shape[0]))
+    with s4:
+        st.metric(label='First Male', value=flag.flag(":" + maleCountry.alpha_2 + ":") + ' ' + str(df[(df['Gender'] == 'M') & df['Placement'] == 1].values[0][1]))
+    with s5:
+        st.metric(label='First Female', value=flag.flag(":" + femaleCountry.alpha_2 + ":") + ' ' + str(df[(df['Gender'] == 'F') & df['Placement'] == 1].values[0][1]))
+
+
+    c1, c2 =  st.columns(2)
+    with c1:
+        fig = plt.figure(figsize=(10, 4))
+        sns.distplot(df['average_tempo(minutes/km)'])
+        st.pyplot(fig)
+    with c1:
+        fig = plt.figure(figsize=(10, 4))
+        sns.distplot(df['Result'], label='Result in seconds')
+        st.pyplot(fig)
+    with c2:
+        fig = plt.figure(figsize=(10, 4))
+        sns.distplot(bszm['age'])
+        st.pyplot(fig)
+    with c2:
+        topAgeCategory = bszm.groupby('Category').agg({
+            'finished' : 'sum'
+        }).sort_values('finished', ascending=False)[:10]
+        fig = plt.figure(figsize=(10, 4))        
+        sns.barplot(y='finished', x='Category', data=topAgeCategory.reset_index())
+        st.pyplot(fig)
+
+
     selected_day = st.selectbox('Day', day_list)
-    data = df[['Name', str(selected_day)+'.day/1.time', str(selected_day)+'.day/2.time', str(selected_day)+'.day/3.time', str(selected_day)+'.day/sum']]
+    data = df[['Name', str(selected_day)+'.day/1.time_normal', str(selected_day)+'/1_tempo', str(selected_day)+'.day/2.time_normal', str(selected_day)+'/2_tempo', str(selected_day)+'.day/3.time_normal', str(selected_day)+'/3_tempo', str(selected_day)+'.day/sum_normal', str(selected_day)+'_tempo']]
     weather_data = df [[ str(selected_day)+'_weather_temp', str(selected_day)+'_weather_rain', str(selected_day)+'_weather_cloud',  str(selected_day)+'_weather_press',  str(selected_day)+'_weather_wind',  str(selected_day)+'_weather_gust']]
+
     
     daily1, daily2, daily3, daily4 = st.columns([4, 0.5, 1, 1])
     
@@ -97,60 +146,3 @@ if (selected == 'Statistics'):
         st.metric(label='Wind', value=str(weather_data.iloc[:3].values[0][4]) + ' km/h')
     with daily4:
         st.metric(label='Gusts', value=str(weather_data.iloc[:3].values[0][5]) + ' km/h')
-        
-    
-    
-    
-    c1, c2, c3 =  st.columns(3)
-    with c1:
-        yearly = {
-            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
-            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
-        }
-        data = pd.DataFrame(yearly)
-        fig, ax = plt.subplots()
-        ax.plot(yearly['Year'], yearly['Attendants'])
-        if(selected_year == "ALL"):
-            st.pyplot(fig)
-        else:
-            st.empty()
-    with c2:
-        yearly = {
-            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
-            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
-        }
-        data = pd.DataFrame(yearly)
-        
-        fig, ax = plt.subplots()
-        ax.plot(yearly['Year'], yearly['Attendants'])
-        st.pyplot(fig)
-    with c3:
-        yearly = {
-            'Attendants': [296, 310, 277, 260, 216, 209, 190, 169, 162, 148, 114, 101, 54],
-            'Year': [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008],
-        }
-        data = pd.DataFrame(yearly)
-    
-     
-    col2, col3, col4 = st.columns(3)
-
-    with col2:
-        st.caption("Competitors sex")
-        my_labels = 'Male', 'Female'
-        fig1, ax1 = plt.subplots()
-        ax1.pie(df['Gender'].value_counts(), labels=my_labels)
-        st.pyplot(fig1)
-
-    with col3:
-        st.caption("Finished race")
-        df['finished'].value_counts()
-        my_labels = 'Finished', 'Failed'
-        fig1, ax1 = plt.subplots()
-        ax1.pie(df['finished'].value_counts(), labels=my_labels)
-        st.pyplot(fig1)
-    with col4:
-        st.caption("Competitors age category")
-        my_labels = 'Male 18-27', 'Male 28-39', 'Male 40-50', 'Male 51-59', 'Male 60+', 'Female 18-27', 'Female 28-39', 'Female 40-55', 'Female 55+'
-        fig1, ax1 = plt.subplots()
-        ax1.pie(df['Category'].value_counts(), labels=my_labels)
-        st.pyplot(fig1)
