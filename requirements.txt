@@ -4,5 +4,5 @@ seaborn
 streamlit
 plotly
 streamlit_option_menu
-flag
+emoji-country-flag
 pycountry
