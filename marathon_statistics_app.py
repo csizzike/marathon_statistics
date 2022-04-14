@@ -146,3 +146,13 @@ if (selected == 'Statistics'):
         st.metric(label='Wind', value=str(weather_data.iloc[:3].values[0][4]) + ' km/h')
     with daily4:
         st.metric(label='Gusts', value=str(weather_data.iloc[:3].values[0][5]) + ' km/h')
+        
+if (selected == "Upload"):
+    st.header("Upload")
+    st.write("You can upload fresh ultramarathon results from BSZM, and you can analyze it in the statistics tab.")
+    st.write("Try it out")
+    files = st.file_uploader(label="Upload new dataset", accept_multiple_files=True)
+    st.button(label='Upload file' if len(files) == 1 else 'Upload files')
+    
+if (selected == "About"):
+    st.image('https://c.tenor.com/7kzP_bmlzccAAAAM/monkiflip-monki.gif')
