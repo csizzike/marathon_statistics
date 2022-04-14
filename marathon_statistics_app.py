@@ -35,6 +35,7 @@ st.set_page_config(page_title="Running analysis", page_icon="./static/images/run
         'About': None})
 
 event_list = list(reversed(range(2008,2021)))
+day_list = list(range(1,5))
 event_list.append('ALL')
 
 @st.cache
@@ -57,26 +58,48 @@ if (selected == 'Statistics'):
     selected_year = st.selectbox('Year', event_list)
     df = load_data(selected_year)
     
-    stat1, empty, stat2, stat3 = st.columns([3, 1, 1, 1])
+    stat1, empty, stat2, stat3 = st.columns([4, 0.5, 1, 1])
     
     with stat1:
-        st.dataframe(df.astype('object'))
-    with empty:
-        st.empty()
+        st.dataframe(df[['Placement', 'Name', 'Born', 'Category', 'Country', 'Team', 'City', 'Gender']].astype('object'))
     with stat2:
-        st.metric(label='Competitors', value=df.shape[0], delta = get_difference(df, selected_year) if selected_year != 'ALL' else None)
+        st.metric(label='Competitors', value=str(df.shape[0]) + ' 🏃🏻', delta = get_difference(df, selected_year) if selected_year != 'ALL' else None)
     with stat2:
-        st.metric(label='Males', value=df[df['Gender'] == 'M'].shape[0], delta= get_difference_gender(df[df['Gender'] == 'M'], selected_year, 'M') if selected_year != 'ALL' else None)
+        st.metric(label='Males', value=str(df[df['Gender'] == 'M'].shape[0]) + ' 🧔🏻‍♂️', delta= get_difference_gender(df[df['Gender'] == 'M'], selected_year, 'M') if selected_year != 'ALL' else None)
     with stat3:
-        st.metric(label='Finishers', value=df[df['finished'] == True].shape[0], delta = get_difference_finishers(df, selected_year) if selected_year != 'ALL' else None)
+        st.metric(label='Finishers', value=str(df[df['finished'] == True].shape[0]) + ' 🏅', delta = get_difference_finishers(df, selected_year) if selected_year != 'ALL' else None)
     with stat3:
-        st.metric(label='Females', value=df[df['Gender'] == 'F'].shape[0], delta = get_difference_gender(df[df['Gender'] == 'F'], selected_year, 'F') if selected_year != 'ALL' else None)
+        st.metric(label='Females', value=str(df[df['Gender'] == 'F'].shape[0]) + ' 👩🏻', delta = get_difference_gender(df[df['Gender'] == 'F'], selected_year, 'F') if selected_year != 'ALL' else None)
     with stat2:
-        st.metric(label='Countries', value=df['Country'].unique().size, delta = get_difference_countries(df, selected_year) if selected_year != 'ALL' else None)
+        st.metric(label='Countries', value=str(df['Country'].unique().size) + ' 🇭🇺', delta = get_difference_countries(df, selected_year) if selected_year != 'ALL' else None)
     with stat3:
-        st.metric(label='Cities', value=df['City'].unique().size, delta = get_difference_cities(df, selected_year) if selected_year != 'ALL' else None)
+        st.metric(label='Cities', value=str(df['City'].unique().size) + ' 🏘', delta = get_difference_cities(df, selected_year) if selected_year != 'ALL' else None)
         
-    df['Country'].unique()
+    selected_day = st.selectbox('Day', day_list)
+    data = df[['Name', str(selected_day)+'.day/1.time', str(selected_day)+'.day/2.time', str(selected_day)+'.day/3.time', str(selected_day)+'.day/sum']]
+    weather_data = df [[ str(selected_day)+'_weather_temp', str(selected_day)+'_weather_rain', str(selected_day)+'_weather_cloud',  str(selected_day)+'_weather_press',  str(selected_day)+'_weather_wind',  str(selected_day)+'_weather_gust']]
+    
+    daily1, daily2, daily3, daily4 = st.columns([4, 0.5, 1, 1])
+    
+    with daily1:
+        st.dataframe(data.astype('object'))
+    with daily2:
+        st.empty()
+    with daily3:
+        st.metric(label='Temperature', value=str(weather_data.iloc[:1].values[0][0]) + ' °C ' + ('🥶' if weather_data.iloc[:1].values[0][0] < 8 else '😎' if weather_data.iloc[:1].values[0][0] < 20 else '🥵'))
+    with daily4:
+        st.metric(label='Rain', value=str(weather_data.iloc[:2].values[0][1]) + ' mm ' + '💧')
+    with daily3:
+        st.metric(label='Clouds', value=str(weather_data.iloc[:3].values[0][2]) + ' % ' + ('☀️' if weather_data.iloc[:3].values[0][2] < 1 else '🌤' if weather_data.iloc[:3].values[0][2] < 50 else  '⛅️' if weather_data.iloc[:3].values[0][2] < 80 else '☁️'       ))
+    with daily4:
+        st.metric(label='Pressure', value=str(weather_data.iloc[:3].values[0][3]) + ' atm ' + '')
+    with daily3:
+        st.metric(label='Wind', value=str(weather_data.iloc[:3].values[0][4]) + ' km/h')
+    with daily4:
+        st.metric(label='Gusts', value=str(weather_data.iloc[:3].values[0][5]) + ' km/h')
+        
+    
+    
     
     c1, c2, c3 =  st.columns(3)
     with c1:
@@ -108,7 +131,6 @@ if (selected == 'Statistics'):
         }
         data = pd.DataFrame(yearly)
     
-     
      
     col2, col3, col4 = st.columns(3)
 
