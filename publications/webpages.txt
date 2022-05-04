@@ -1,1 +1,5 @@
 https://www.sciencedirect.com/topics/computer-science/decision-tree-classifier#:~:text=The%20decision%20tree%20classifier%20(Pang,possible%20values%20for%20that%20attribute.
+
+https://medium.datadriveninvestor.com/random-forest-pros-and-cons-c1c42fb64f04
+
+https://www.oreilly.com/library/view/machine-learning-with/9781787121515/697c4c5f-1109-4058-8938-d01482389ce3.xhtml
