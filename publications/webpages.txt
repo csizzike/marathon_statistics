@@ -3,3 +3,5 @@ https://www.sciencedirect.com/topics/computer-science/decision-tree-classifier#:
 https://medium.datadriveninvestor.com/random-forest-pros-and-cons-c1c42fb64f04
 
 https://www.oreilly.com/library/view/machine-learning-with/9781787121515/697c4c5f-1109-4058-8938-d01482389ce3.xhtml
+
+https://gyires.inf.unideb.hu/KMITT/a04/ch04s04.html
