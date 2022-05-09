@@ -5,3 +5,20 @@ https://medium.datadriveninvestor.com/random-forest-pros-and-cons-c1c42fb64f04
 https://www.oreilly.com/library/view/machine-learning-with/9781787121515/697c4c5f-1109-4058-8938-d01482389ce3.xhtml
 
 https://gyires.inf.unideb.hu/KMITT/a04/ch04s04.html
+
+https://www.kdnuggets.com/2019/06/5-ways-lack-data-machine-learning.html
+
+https://www.kaggle.com/code/rafjaa/dealing-with-very-small-datasets/notebook
+
+https://towardsdatascience.com/half-marathon-finish-time-prediction-part-1-5807760033eb
+
+https://www.aaai.org/Papers/Workshops/2000/WS-00-05/WS00-05-001.pdf
+
+https://www.researchgate.net/profile/Andrew-Wong-43/publication/263913891_Classification_of_imbalanced_data_a_review/links/550e28780cf212874167e2af/Classification-of-imbalanced-data-a-review.pdf
+
+https://towardsdatascience.com/what-is-feature-engineering-importance-tools-and-techniques-for-machine-learning-2080b0269f10
+
+https://www.kaggle.com/code/aiaiaidavid/childhood-ultra-marathon-runner-study
+
+
+https://towardsdatascience.com/naive-bayes-classifier-81d512f50a7c
