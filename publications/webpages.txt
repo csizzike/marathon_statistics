@@ -12,10 +12,6 @@ https://www.kaggle.com/code/rafjaa/dealing-with-very-small-datasets/notebook
 
 https://towardsdatascience.com/half-marathon-finish-time-prediction-part-1-5807760033eb
 
-https://www.aaai.org/Papers/Workshops/2000/WS-00-05/WS00-05-001.pdf
-
-https://www.researchgate.net/profile/Andrew-Wong-43/publication/263913891_Classification_of_imbalanced_data_a_review/links/550e28780cf212874167e2af/Classification-of-imbalanced-data-a-review.pdf
-
 https://towardsdatascience.com/what-is-feature-engineering-importance-tools-and-techniques-for-machine-learning-2080b0269f10
 
 https://www.kaggle.com/code/aiaiaidavid/childhood-ultra-marathon-runner-study

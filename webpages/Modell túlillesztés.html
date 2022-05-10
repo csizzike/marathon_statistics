@@ -1,0 +1,1114 @@
+
+<!-- saved from url=(0051)https://gyires.inf.unideb.hu/KMITT/a04/ch04s04.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><title>Modell túlillesztés</title><link rel="stylesheet" type="text/css" href="./Modell túlillesztés_files/style.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="https://gyires.inf.unideb.hu/KMITT/a04/index.html" title="Bevezetés az adatbányászatba"><link rel="up" href="https://gyires.inf.unideb.hu/KMITT/a04/ch04.html" title="4. fejezet - Osztályozás:Alapfogalmak, döntési fák és modellek kiértékelése"><link rel="prev" href="https://gyires.inf.unideb.hu/KMITT/a04/ch04s03.html" title="Döntési fa következtetés"><link rel="next" href="https://gyires.inf.unideb.hu/KMITT/a04/ch04s05.html" title="Egy osztályozó teljesítményének a kiértékelése"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tbody><tr><th colspan="3" align="center">Modell túlillesztés</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="https://gyires.inf.unideb.hu/KMITT/a04/ch04s03.html">Vissza</a>&nbsp;</td><th width="60%" align="center">4. fejezet - Osztályozás:Alapfogalmak, döntési fák és modellek
+    kiértékelése</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="https://gyires.inf.unideb.hu/KMITT/a04/ch04s05.html">El&#337;re</a></td></tr></tbody></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idp113375904"></a>Modell túlillesztés</h2></div></div></div>
+      
+
+      <p></p>
+
+      <p>Egy osztályozási modellben elkövetett hibák általában két
+      csoportba sorolhatóak: <span class="strong"><strong>tanítási hibák</strong></span>
+      (<span class="strong"><strong>training errors</strong></span>) és <span class="strong"><strong>általánosítási hibák</strong></span> (<span class="strong"><strong>generalization errors</strong></span>). A tanítási hiba, vagy
+      más néven <span class="strong"><strong>visszahelyettesítési hiba
+      (resubstitution error)</strong></span> vagy <span class="strong"><strong>látszólagos hiba</strong></span> a tanulórekordokon elkövetett
+      helytelen osztályozási hibák száma, míg az általánosítási hiba a modell
+      várható hibája korábban nem látott rekordokon.</p>
+
+      <p>A 4.2. szakaszból emlékeztetünk arra, hogy egy jó osztályozási
+      modell nem csak a tanulóadatokra illeszkedik jól, hanem azokat a
+      rekordokat is pontosan osztályozza, amelyeket még soha sem látott. Más
+      szóval, egy jó modellnek kis tanítási hibával, valamint kis
+      általánosítási hibával kell rendelkeznie. Ez azért fontos, mert egy
+      olyan modell, amely túl jól illeszkedik a tanulóadatokra, rosszabb
+      általánosítási hibával rendelkezhet, mint egy nagyobb tanítási hibájú
+      modell. Ez a helyzet modell túlillesztésként ismert.</p>
+
+      <p></p>
+
+      <p><span class="strong"><strong>Egy túlillesztési példa kétdimenziós
+      adatokon</strong></span></p>
+
+      <p>A túlillesztési probléma egy konkrétabb példájaként tekintsük a
+      4.22. ábrán látható kétdimenziós adatállományt. Az adatállomány olyan
+      adatpontokat tartalmaz, amelyek két különböz&#337;, egyenként o-val és +-szal
+      jelölt, osztályba tartoznak. Az o osztálybeli adatpontokat három Gauss
+      eloszlás keverékéb&#337;l generáltuk, míg a + osztálybeli adatpontok
+      létrehozására egyenletes eloszlást használtunk. Összesen 1200 pont
+      tartozik az o osztályba és 1800 pont + osztályba. A pontok
+      
+          <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+          <mml:mn>30</mml:mn><mml:mtext>%</mml:mtext> </mml:mrow>
+          
+          </mml:semantics></mml:math>
+         -át választottuk ki tanításra, míg a fennmaradó
+      
+          <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+          <mml:mn>70</mml:mn><mml:mtext>%</mml:mtext> </mml:mrow>
+          
+          </mml:semantics></mml:math>
+         -ot a tesztelésre használjuk. Ezután a Gini-indexet
+      szennyezettségi mértéknek használó döntési fa osztályozót alkalmaztunk a
+      tanulóhalmazon. A túlillesztés hatásának vizsgálatára különböz&#337; szint&#369;
+      metszéseket alkalmaztunk a kezdeti, teljesen felépített fára. A 4.23.
+      ábra mutatja a döntési fa tanítási és tesztelési hibaarányait.</p>
+
+      <p></p>
+
+      <div class="figure"><a name="idp114485888"></a><p class="title"><b>4.22. ábra - Példa adatállományra bináris osztályokkal</b></p><div class="figure-contents">
+        
+
+        <div class="mediaobject"><img src="./Modell túlillesztés_files/fig3_overfit_2d_gaussian.png" alt="Példa adatállományra bináris osztályokkal"></div>
+      </div></div><br class="figure-break">
+
+      <p></p>
+
+      <p></p>
+
+      <div class="figure"><a name="idp114489856"></a><p class="title"><b>4.23. ábra - Tanítási és tesztelési hibaarányok</b></p><div class="figure-contents">
+        
+
+        <div class="mediaobject"><img src="./Modell túlillesztés_files/fig3_T0_curve.png" alt="Tanítási és tesztelési hibaarányok"></div>
+      </div></div><br class="figure-break">
+
+      <p></p>
+
+      <p>Vegyük észre, hogy a modell tanítási és tesztelési hibaarányai
+      nagyok, ha a fa mérete nagyon kicsi. Ez a helyzet <span class="strong"><strong>modell alulillesztés</strong></span>ként (<span class="strong"><strong>model underfitting</strong></span>) ismert. Az alulillesztés
+      azért lép fel, mert a modell még nem tanulta meg az adatok igazi
+      szerkezetét. Ennek eredményeként gyengén teljesít a tanuló- és a
+      teszthalmazon egyaránt. Ahogy a döntési fa csúcsainak száma n&#337;, a fa
+      tanítási és tesztelési hibái csökkennek. Amennyiben azonban a fa túl
+      naggyá válik, a tesztelési hibaarány elkezd n&#337;ni annak ellenére, hogy a
+      tanítási hibaarány folyamatosan csökken. Ez a jelenség <span class="strong"><strong>modell túlillesztés</strong></span>ként (<span class="strong"><strong>model overfitting</strong></span>) ismert.</p>
+
+      <p>Ahhoz, hogy megértsük a túlillesztés jelenségét, megjegyezzük,
+      hogy a modell tanítási hibája csökkenthet&#337; a modell bonyolultságának
+      növelésével. A fa levélcsúcsai például addig b&#337;víthet&#337;ek, amíg a fa
+      tökéletesen nem illeszkedik a tanulóadatokra. Bár egy ilyen összetett fa
+      tanítási hibája nulla, a tesztelési hiba már nagy lehet, mert a fa olyan
+      csúcsokat is tartalmazhat, amelyek csak véletlenül illeszkednek a
+      tanulóadatok néhány zajos pontjára. Ezek a csúcsok rontják a fa
+      teljesítményét, mert nem általánosítanak jól a tesztesetekre. A 4.24.
+      ábra két különböz&#337; csúcsszámú döntési fa szerkezetét mutatja. Annak a
+      fának, amelyik kevesebb számú csúcsot tartalmaz, nagyobb a tanítási
+      hibaaránya, de kisebb a tesztelési hibaaránya, mint a bonyolultabb
+      fáé.</p>
+
+      <div class="figure"><a name="idp114497968"></a><p class="title"><b>4.24. ábra - Különböz&#337; modell bonyolultságú döntési fák</b></p><div class="figure-contents">
+        
+
+        <div class="mediaobject"><img src="./Modell túlillesztés_files/fig3_overfit_2d_tree1.png" alt="Különböz&#337; modell bonyolultságú döntési fák"></div>
+      </div></div><br class="figure-break">
+
+      <p>A túlillesztés és alulillesztés két olyan rendellenesség, amely a
+      modell bonyolultságával kapcsolatos. A szakasz további részében a modell
+      túlillesztés néhány lehetséges okát vizsgáljuk meg.</p>
+
+      <p></p>
+
+      <div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idp114503216"></a>Zaj miatti túlillesztés</h3></div></div></div>
+        
+
+        <p></p>
+
+        <p>Tekintsük a 4.3. és a 4.4. táblázatokban látható tanuló- és
+        teszthalmazokat az eml&#337;s osztályozási feladatra. A tíz tanulórekord
+        közül kett&#337; kapott téves címkét: a denevéreket és a bálnákat
+        osztályoztuk nem-eml&#337;söknek eml&#337;sök helyett.</p>
+
+        <p></p>
+
+        <div class="table"><a name="idp114505488"></a><p class="title"><b>4.3. táblázat - Egy példa tanulóhalmaz az eml&#337;sök osztályozására.
+          Csillagozott osztálycímkék jelölik a tévesen címkézett
+          rekordokat.</b></p><div class="table-contents">
+          
+
+          <table summary="Egy példa tanulóhalmaz az eml&#337;sök osztályozására.
+          Csillagozott osztálycímkék jelölik a tévesen címkézett
+          rekordokat." border="1"><colgroup><col width="75.0pt" class="col1"><col width="75.0pt" class="col2"><col width="75.0pt" class="col3"><col width="75.0pt" class="col4"><col width="75.0pt" class="col5"><col width="75.0pt" class="col6"></colgroup><tbody><tr><td align="center" valign="top"><p> Név </p></td><td align="center" valign="top"><p> Test- </p></td><td align="center" valign="top"><p> Eleven- </p></td><td align="center" valign="top"><p> Négy- </p></td><td align="center" valign="top"><p> Téli álmot </p></td><td align="center" valign="top"><p> Osztály-</p></td></tr><tr><td align="center" valign="top"><p></p></td><td align="center" valign="top"><p> h&#337;mérséklet </p></td><td align="center" valign="top"><p> szül&#337; </p></td><td align="center" valign="top"><p> lábú </p></td><td align="center" valign="top"><p> alszik </p></td><td align="center" valign="top"><p> címke </p></td></tr><tr><td align="center" valign="top"><p> sündisznó </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td></tr><tr><td align="center" valign="top"><p>macska </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td></tr><tr><td align="center" valign="top"><p>denevér </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem 
+                    <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msup>
+                    <mml:mtext>&nbsp;</mml:mtext> <mml:mtext>*</mml:mtext>
+                    </mml:msup> </mml:mrow> 
+                    </mml:semantics></mml:math>
+                   </p></td></tr><tr><td align="center" valign="top"><p>bálna </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem 
+                    <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msup>
+                    <mml:mtext>&nbsp;</mml:mtext> <mml:mtext>*</mml:mtext>
+                    </mml:msup> </mml:mrow> 
+                    </mml:semantics></mml:math>
+                   </p></td></tr><tr><td align="center" valign="top"><p>szalamandra </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>komodói sárkány </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>óriáskígyó </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>lazac </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>sas </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>guppi (hal) </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr></tbody></table>
+        </div></div><br class="table-break">
+
+        <p></p>
+
+        <div class="table"><a name="idp114668560"></a><p class="title"><b>4.4. táblázat - Egy példa teszthalmaz az eml&#337;sök osztályozására</b></p><div class="table-contents">
+          
+
+          <table summary="Egy példa teszthalmaz az eml&#337;sök osztályozására" border="1"><colgroup><col width="75.0pt" class="col1"><col width="75.0pt" class="col2"><col width="75.0pt" class="col3"><col width="75.0pt" class="col4"><col width="75.0pt" class="col5"><col width="75.0pt" class="col6"></colgroup><tbody><tr><td align="center" valign="top"><p> Név </p></td><td align="center" valign="top"><p> Test- </p></td><td align="center" valign="top"><p> Eleven- </p></td><td align="center" valign="top"><p> Négy- </p></td><td align="center" valign="top"><p> Téli álmot </p></td><td align="center" valign="top"><p> Osztály-</p></td></tr><tr><td align="center" valign="top"><p></p></td><td align="center" valign="top"><p> h&#337;mérséklet </p></td><td align="center" valign="top"><p> szül&#337; </p></td><td align="center" valign="top"><p> lábú </p></td><td align="center" valign="top"><p> alszik </p></td><td align="center" valign="top"><p> címke </p></td></tr><tr><td align="center" valign="top"><p> ember </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td></tr><tr><td align="center" valign="top"><p>galamb </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>elefánt </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen</p></td></tr><tr><td align="center" valign="top"><p>leopárdcápa </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>tekn&#337;sbéka </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>pingvin </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem</p></td></tr><tr><td align="center" valign="top"><p>angolna </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>delfin </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td></tr><tr><td align="center" valign="top"><p>hangyászsün </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td></tr><tr><td align="center" valign="top"><p>viperagyík </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td></tr></tbody></table>
+        </div></div><br class="table-break">
+
+        <p></p>
+
+        <p></p>
+
+        <div class="figure"><a name="idp114823456"></a><p class="title"><b>4.25. ábra - A 4.3. táblázatbeli adatállomány által indukált döntési
+          fa</b></p><div class="figure-contents">
+          
+
+          <div class="mediaobject"><img src="./Modell túlillesztés_files/fig3_dtree_mammals.png" alt="A 4.3. táblázatbeli adatállomány által indukált döntési fa"></div>
+        </div></div><br class="figure-break">
+
+        <p>Egy a tanulóadatokra tökéletesen illeszked&#337; döntési fa látható
+        17. (a) ábrán. Bár a fa tanítási hibája nulla, a tesztelési hibaaránya
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>30</mml:mn><mml:mtext>%</mml:mtext> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+           . Az emberek és a delfinek egyaránt hibásan
+        osztályozódnak mint nem-eml&#337;sök, mert a <code class="code"> Testh&#337;mérséklet
+        </code>, <code class="code"> Elevenszül&#337;</code> és <code class="code"> Négylábú</code>
+        attribútumok értékei azonosak a tanulóhalmaz tévesen címkézett
+        rekordjaiéval. A hangyászsünök másrészt egy kivételes esetet
+        jelentenek, amikor egy tesztrekord osztálycímkéje ellentmond más
+        hasonló rekordok osztálycímkéjének a tanulóhalmazban. A kivételes
+        esetek miatti hibák gyakran elkerülhetetlenek, és meghatározzák a
+        bármilyen osztályozó által elérhet&#337; minimális hibaarányt.</p>
+
+        <p></p>
+
+        <p>Ezzel szemben a 4.25. (b) ábrán látható 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>M</mml:mi><mml:mn>2</mml:mn> </mml:mrow> 
+            </mml:semantics></mml:math>
+           döntési fa tesztelési hibaaránya kisebb (
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>10</mml:mn><mml:mtext>%</mml:mtext> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+           ) annak ellenére, hogy a tanítási hibaarány
+        valamivel magasabb ( 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>20</mml:mn><mml:mtext>%</mml:mtext> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+           ). Nyilvánvaló, hogy az 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>M</mml:mi><mml:mn>1</mml:mn> </mml:mrow> 
+            </mml:semantics></mml:math>
+           els&#337; döntési fa túlillesztett a tanulóadatokon,
+        mert létezik egy egyszer&#369;bb modell, amelynek kisebb a hibaaránya a
+        teszthalmazon. A <code class="code"> Négylábú</code> attribútumon alapuló
+        tesztfeltétel az 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>M</mml:mi><mml:mn>1</mml:mn> </mml:mrow> 
+            </mml:semantics></mml:math>
+           modellben hamis, mert illeszkedik a tévesen
+        címkézett tanító rekordokra, ami a rekordok téves osztályozására vezet
+        a teszthalmazon.</p>
+
+        <p></p>
+      </div>
+
+      <div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idp114851904"></a>Túlillesztés jellegzetes minták hiánya miatt</h3></div></div></div>
+        
+
+        <p></p>
+
+        <p>Azok a modellek, amelyeknek az osztályozási döntései kevés számú
+        tanulórekordon alapulnak, szintén érzékenyek a túlillesztésre. Ezek a
+        modellek akkor jöhetnek létre, ha a tanulóadatokból jellegzetes minták
+        hiányoznak, és a tanuló algoritmusok akkor is tovább finomítják a
+        modelljeiket, ha már csak néhány tanulórekord áll rendelkezésre.
+        Ezeket a hatásokat szemléltetjük az alábbi példában.</p>
+
+        <p>Tekintsük a 4.5. táblázatban látható öt tanulórekordot.
+        Mindegyik tanulórekord helyesen címkézett, és a megfelel&#337; döntési fát
+        a 4.26. ábrán ábrázoltuk. Bár a tanítási hiba nulla, a hibaarány
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>30</mml:mn><mml:mtext>%</mml:mtext> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+           a teszthalmazon.</p>
+
+        <p></p>
+
+        <div class="table"><a name="idp114858208"></a><p class="title"><b>4.5. táblázat - Egy példa tanítóhalmaz az eml&#337;sök osztályozására.</b></p><div class="table-contents">
+          
+
+          <table summary="Egy példa tanítóhalmaz az eml&#337;sök osztályozására." border="1"><colgroup><col width="75.0pt" class="col1"><col width="75.0pt" class="col2"><col width="75.0pt" class="col3"><col width="75.0pt" class="col4"><col width="75.0pt" class="col5"><col width="75.0pt" class="col6"></colgroup><tbody><tr><td align="center" valign="top"><p> Név </p></td><td align="center" valign="top"><p> Test- </p></td><td align="center" valign="top"><p> Eleven- </p></td><td align="center" valign="top"><p> Négy- </p></td><td align="center" valign="top"><p> Téli álmot </p></td><td align="center" valign="top"><p> Osztály-</p></td></tr><tr><td align="center" valign="top"><p></p></td><td align="center" valign="top"><p> h&#337;mérséklet </p></td><td align="center" valign="top"><p> szül&#337; </p></td><td align="center" valign="top"><p> lábú </p></td><td align="center" valign="top"><p> alszik </p></td><td align="center" valign="top"><p> címke </p></td></tr><tr><td align="center" valign="top"><p> szalamandra </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>guppi (hal) </p></td><td align="center" valign="top"><p> hidegvér&#369; </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>sas </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>kecskefej&#337; (madár) </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> nem </p></td></tr><tr><td align="center" valign="top"><p>kacsacs&#337;r&#369; emlos </p></td><td align="center" valign="top"><p> melegvér&#369; </p></td><td align="center" valign="top"><p> nem </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td><td align="center" valign="top"><p> igen </p></td></tr></tbody></table>
+        </div></div><br class="table-break">
+
+        <p></p>
+
+        <p></p>
+
+        <div class="figure"><a name="idp114952832"></a><p class="title"><b>4.26. ábra - A 4.5. táblázatbeli adatállomány által indukált döntési
+          fa</b></p><div class="figure-contents">
+          
+
+          <div class="mediaobject"><img src="./Modell túlillesztés_files/fig3_dtree_mammals2.png" alt="A 4.5. táblázatbeli adatállomány által indukált döntési fa"></div>
+        </div></div><br class="figure-break">
+
+        <p></p>
+
+        <p>Az emberek, elefántok és delfinek tévesen osztályozódnak, mert a
+        döntési fa az összes téli álmot nem alvó melegvér&#369; gerincest
+        nem-eml&#337;snek osztályozza. A fa azért jut erre az osztályozási
+        döntésre, mert csak egy tanulórekord van ilyen jellemz&#337;kkel, a sas. Ez
+        a példa világosan demonstrálja a rossz el&#337;rejelzés veszélyét, amikor
+        nincs elég reprezentatív eset egy döntési fa levélcsúcsaiban.</p>
+
+        <p></p>
+      </div>
+
+      <div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idp114958000"></a>Túlillesztés és a többszörös összehasonlítási eljárás</h3></div></div></div>
+        
+
+        <p></p>
+
+        <p>A modell túlillesztés olyan tanuló algoritmusoknál is
+        felmerülhet, amelyek a többszörös összehasonlítási eljárásként ismert
+        módszertant alkalmazzák. Ahhoz, hogy megértsük a többszörös
+        összehasonlítási eljárást, tekintsük annak el&#337;rejelzésének a
+        feladatát, hogy a t&#337;zsde növekedni vagy csökkenni fog-e a következ&#337;
+        tíz kereskedési napon. Ha egy t&#337;zsdei elemz&#337; egyszer&#369; véletlen
+        találgatásokat tesz, akkor 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mn>0,5</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           annak a valószín&#369;sége, hogy az el&#337;rejelzése helyes
+        bármelyik kereskedési napon. Ugyanakkor annak a valószín&#369;sége, hogy
+        tízb&#337;l legalább nyolcszor helyesen jósol</p>
+
+        <p>
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mfrac> <mml:mrow>
+            <mml:mrow><mml:mo>(</mml:mo> <mml:mrow> <mml:mtable> <mml:mtr>
+            <mml:mtd> <mml:mrow> <mml:mn>10</mml:mn> </mml:mrow> </mml:mtd>
+            </mml:mtr> <mml:mtr> <mml:mtd> <mml:mn>8</mml:mn> </mml:mtd>
+            </mml:mtr> </mml:mtable> </mml:mrow>
+            <mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mrow><mml:mo>(</mml:mo>
+            <mml:mrow> <mml:mtable> <mml:mtr> <mml:mtd> <mml:mrow>
+            <mml:mn>10</mml:mn> </mml:mrow> </mml:mtd> </mml:mtr> <mml:mtr>
+            <mml:mtd> <mml:mn>9</mml:mn> </mml:mtd> </mml:mtr> </mml:mtable>
+            </mml:mrow>
+            <mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mrow><mml:mo>(</mml:mo>
+            <mml:mrow> <mml:mtable> <mml:mtr> <mml:mtd> <mml:mrow>
+            <mml:mn>10</mml:mn> </mml:mrow> </mml:mtd> </mml:mtr> <mml:mtr>
+            <mml:mtd> <mml:mrow> <mml:mn>10</mml:mn> </mml:mrow> </mml:mtd>
+            </mml:mtr> </mml:mtable> </mml:mrow> <mml:mo>)</mml:mo></mml:mrow>
+            </mml:mrow> <mml:mrow> <mml:msup> <mml:mn>2</mml:mn> <mml:mrow>
+            <mml:mn>10</mml:mn> </mml:mrow> </mml:msup> </mml:mrow>
+            </mml:mfrac> <mml:mo>=</mml:mo><mml:mn>0,0547,</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+          </p>
+
+        <p>amely igen valószín&#369;tlennek t&#369;nik.</p>
+
+        <p>Tegyük fel, hogy ötven t&#337;zsdei elemz&#337; közül egy befektetési
+        tanácsadó kiválasztása iránt érdekl&#337;dünk. Stratégiánk az, hogy azt az
+        elemz&#337;t választjuk ki, aki a legtöbb helyes el&#337;rejelzést hozza az
+        elkövetkez&#337; tíz kereskedési napon. A hiba ebben a stratégiában az,
+        hogy még ha minden elemz&#337; véletlenszer&#369; módon jelez el&#337;re,</p>
+
+        <p>
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>1</mml:mn><mml:mo>&#8722;</mml:mo><mml:msup> <mml:mrow> <mml:mo stretchy="false">(</mml:mo><mml:mn>1</mml:mn><mml:mo>&#8722;</mml:mo><mml:mn>0,0547</mml:mn><mml:mo stretchy="false">)</mml:mo> </mml:mrow> <mml:mrow>
+            <mml:mn>50</mml:mn> </mml:mrow> </mml:msup>
+            <mml:mo>=</mml:mo><mml:mn>0,9399</mml:mn> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+          </p>
+
+        <p>annak a valószín&#369;sége, hogy legalább az egyik közülük legalább
+        nyolc pontos el&#337;rejelzést tesz, ami nagyon magas. Bár mindegyik elemz&#337;
+        kis valószín&#369;séggel jelez helyesen el&#337;re legalább nyolc alkalommal,
+        összekötve &#337;ket már nagy valószín&#369;séggel találunk egy olyan elemz&#337;t,
+        aki ezt képes megtenni. Nincs garancia továbbá a jöv&#337;ben arra, hogy
+        egy ilyen elemz&#337; továbbra is pontos el&#337;rejelzéseket fog adni
+        véletlenszer&#369; találgatással.</p>
+
+        <p>Hogyan kapcsolódik a többszörös összehasonlítási eljárás a
+        modell túlillesztéshez? Sok tanuló algoritmus független alternatívák
+        egy 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mo>{</mml:mo><mml:msub>
+            <mml:mi>&#947;</mml:mi> <mml:mi>i</mml:mi> </mml:msub>
+            <mml:mo>}</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+           halmazát tárja fel, majd azt a 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>&#947;</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           alternatívát választja, amely egy adott kritérium
+        függvényt maximalizál. Az algoritmus hozzáadja 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>&#947;</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           -ot az aktuális modellhez azért, hogy javítsa
+        annak összteljesítményét. Ezt az eljárást addig ismételjük, amíg
+        további javulás nem figyelhet&#337; meg. A döntési fa építése során például
+        több vizsgálatot végzünk, hogy melyik attribútum tudja legjobban vágni
+        a tanulóadatokat. A legjobb vágáshoz vezet&#337; attribútumot választjuk a
+        fa növelésére addig, amíg a megfigyelt javulás statisztikailag
+        szignifikáns.</p>
+
+        <p>Legyen 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>T</mml:mi>
+            <mml:mn>0</mml:mn> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           a kezdeti döntési fa és 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>x</mml:mi> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           az új fa az 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>x</mml:mi> 
+            </mml:semantics></mml:math>
+           attribútumhoz tartozó bels&#337; csúcs beszúrása után.
+        Elvileg 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>x</mml:mi> 
+            </mml:semantics></mml:math>
+           -et akkor lehet hozzáadni a fához, ha a
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#916;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mn>0</mml:mn> </mml:msub> <mml:mo>,</mml:mo><mml:msub>
+            <mml:mi>T</mml:mi> <mml:mi>x</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+           megfigyelt nyereség nagyobb, mint egy el&#337;re
+        meghatározott 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>&#945;</mml:mi> 
+            </mml:semantics></mml:math>
+           küszöbérték. Ha csak egy attribútum tesztfeltételt
+        kell kiértékelni, akkor el tudjuk elkerülni hamis csúcsok beszúrását
+        úgy, hogy egy elég nagy 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>&#945;</mml:mi> 
+            </mml:semantics></mml:math>
+           értéket választunk. A gyakorlatban azonban egynél
+        több tesztfeltétel áll rendelkezésre, és a döntési fa algoritmusnak
+        kell kiválasztani a legjobb 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>x</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           attribútumot jelöltek egy 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mo>{</mml:mo><mml:msub>
+            <mml:mi>x</mml:mi> <mml:mn>1</mml:mn> </mml:msub>
+            <mml:mo>,</mml:mo><mml:msub> <mml:mi>x</mml:mi> <mml:mn>2</mml:mn>
+            </mml:msub>
+            <mml:mo>,</mml:mo><mml:mo>…</mml:mo><mml:mo>,</mml:mo><mml:msub>
+            <mml:mi>x</mml:mi> <mml:mi>k</mml:mi> </mml:msub>
+            <mml:mo>}</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+           halmazából, hogy az adatokat particionáljuk. Ebben
+        az esetben az algoritmus valójában egy többszörös összehasonlítási
+        eljárást használ annak eldöntésére, hogy megnöveljen-e egy döntési
+        fát. Pontosabban, 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#916;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mn>0</mml:mn> </mml:msub> <mml:mo>,</mml:mo><mml:msub>
+            <mml:mi>T</mml:mi> <mml:mi>x</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>&#8805;</mml:mo><mml:mi>&#945;</mml:mi>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           helyett a 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#916;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mn>0</mml:mn> </mml:msub> <mml:mo>,</mml:mo><mml:msub>
+            <mml:mi>T</mml:mi> <mml:mrow> <mml:msub> <mml:mi>x</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>&#8805;</mml:mo><mml:mi>&#945;</mml:mi>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           egyenl&#337;tlenséget vizsgálja. Mivel az alternatívák
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>k</mml:mi> 
+            </mml:semantics></mml:math>
+           száma n&#337;, így vele együtt n&#337; annak az esélye, hogy
+        egy olyan 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>x</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           -ot találunk, melyre 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#916;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mn>0</mml:mn> </mml:msub> <mml:mo>,</mml:mo><mml:msub>
+            <mml:mi>T</mml:mi> <mml:mrow> <mml:msub> <mml:mi>x</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>&#8805;</mml:mo><mml:mi>&#945;</mml:mi>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           . Kivéve ha a 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mtext>&#916;</mml:mtext> 
+            </mml:semantics></mml:math>
+           nyereségfüggvényt, vagy az 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>&#945;</mml:mi> 
+            </mml:semantics></mml:math>
+           küszöbértéket a 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>k</mml:mi> 
+            </mml:semantics></mml:math>
+           nagyságához nem igazítjuk, az algoritmus
+        akaratlanul is hamis csúcsokat ad hozzá a modellhez, ami modell
+        túlillesztéshez vezet.</p>
+
+        <p>Ez a hatás egyre kifejezettebb lesz, ha a tanulórekordok,
+        ahonnan 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>x</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           -ot választjuk, száma kicsi, mert 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#916;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mn>0</mml:mn> </mml:msub> <mml:mo>,</mml:mo><mml:msub>
+            <mml:mi>T</mml:mi> <mml:mrow> <mml:msub> <mml:mi>x</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> </mml:msub> <mml:mo stretchy="false">)</mml:mo>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           varianciája nagy, ha kevesebb eset áll a tanítás
+        rendelkezésére. Ennek eredményeként ha nagyon kevés tanulórekord van,
+        akkor n&#337; annak a valószín&#369;sége, hogy egy olyan 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>x</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           -ot találunk, melyre 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#916;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mn>0</mml:mn> </mml:msub> <mml:mo>,</mml:mo><mml:msub>
+            <mml:mi>T</mml:mi> <mml:mrow> <mml:msub> <mml:mi>x</mml:mi>
+            <mml:mrow> <mml:mtext>max</mml:mtext> </mml:mrow> </mml:msub>
+            </mml:mrow> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>&#8805;</mml:mo><mml:mi>&#945;</mml:mi>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           . Ez gyakran el&#337;fordul, amikor a döntési fa mély
+        lesz, ami viszont csökkenti a csúcsok által lefedett rekordok számát,
+        és növeli annak valószín&#369;ségét, hogy felesleges csúcsot adunk a fához.
+        A nagy számú alternatíva vagy a kis számú tanulórekord hibájának
+        kompenzálása ezért modell túlillesztéshez vezet.</p>
+
+        <p></p>
+      </div>
+
+      <div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idp115123856"></a>Általánosítási hibák becslése</h3></div></div></div>
+        
+
+        <p></p>
+
+        <p>Bár a túlillesztés els&#337;dleges oka még mindig vita tárgya,
+        általában egyetértenek abban, hogy a modell bonyolultsága
+        (összetettsége) hatással van a modell túlillesztésre, mint ahogy azt a
+        4.23. ábra mutatja. A kérdés az, hogyan határozzuk meg a megfelel&#337;
+        modell bonyolultságot? Ideális bonyolultságról akkor beszélünk, ha egy
+        modell a legkisebb általánosítási hibát adja. A probléma az, hogy a
+        tanuló algoritmus csak a tanulórekordokhoz fér hozzá a modell építése
+        során (lásd a 4.3. ábrát). Nem ismeri a teszthalmazt, és így nem
+        tudja, milyen jól fog majd m&#369;ködni a fa olyan rekordokon, amelyeket
+        még sohasem látott. A legjobb, amit tehetünk, hogy megbecsüljük a
+        felépített fa általánosítási hibáját. Ez a szakasz több módszert is
+        ismertet a becslés végrehajtására.</p>
+
+        <p></p>
+
+        <p><span class="strong"><strong>Visszahelyettesítéses becslés
+        használata</strong></span></p>
+
+        <p></p>
+
+        <p>A visszahelyettesítéses becslés megközelítés feltételezi, hogy a
+        tanulóhalmaz jól reprezentálja az összes adatot. Következésképpen a
+        tanítási hiba, vagy más néven visszahelyettesítéses hiba használható
+        arra, hogy az általánosítási hiba egy optimista becslését adja. E
+        feltételezés szerint egy döntési fa következtetési algoritmus
+        egyszer&#369;en azt a modellt választja ki, mint végleges modellt, amelyik
+        a legkisebb tanítási hibaarányt adja. A tanítási hiba ugyanakkor
+        általában az általánosítási hiba rossz becslése.</p>
+
+        <p></p>
+
+        <div class="figure"><a name="idp115130208"></a><p class="title"><b>4.27. ábra - Példa azonos tanulóadatokból el&#337;állított két döntési
+          fára</b></p><div class="figure-contents">
+          
+
+          <div class="mediaobject"><img src="./Modell túlillesztés_files/fig3_pessimistic.png" alt="Példa azonos tanulóadatokból el&#337;állított két döntési fára"></div>
+        </div></div><br class="figure-break">
+
+        <p></p>
+
+        <div class="orderedlist"><ol class="orderedlist" start="12" type="1"><li class="listitem">
+            <p><span class="strong"><strong>Példa.</strong></span></p>
+
+            <p>Tekintsük a.4.27. ábrán látható bináris döntési fákat.
+            Tegyük fel, hogy mindkét fát ugyanazok a tanulóadatok generálják,
+            és mindkett&#337; a többségi osztálynak megfelel&#337;en hozza osztályozási
+            döntéseit minden levélcsúcsban. Megjegyezzük, hogy a
+            
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub>
+                <mml:mi>T</mml:mi> <mml:mi>L</mml:mi> </mml:msub> </mml:mrow>
+                
+                </mml:semantics></mml:math>
+               baloldali fa összetettebb, mert a
+            
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub>
+                <mml:mi>T</mml:mi> <mml:mi>R</mml:mi> </mml:msub> </mml:mrow>
+                
+                </mml:semantics></mml:math>
+               jobboldali fa néhány levélcsúcsát
+            terjesztettük ki. A baloldali fa tanítási hibaaránya
+            
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mi>e</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+                <mml:mi>L</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>4</mml:mn><mml:mo>/</mml:mo><mml:mn>24</mml:mn><mml:mo>=</mml:mo><mml:mn>0,167</mml:mn>
+                </mml:mrow> 
+                </mml:semantics></mml:math>
+               , míg a jobboldali fa tanítási hibaaránya
+            
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mi>e</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+                <mml:mi>R</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>6</mml:mn><mml:mo>/</mml:mo><mml:mn>24</mml:mn><mml:mo>=</mml:mo><mml:mn>0,25</mml:mn>
+                </mml:mrow> 
+                </mml:semantics></mml:math>
+               . A visszahelyettesítéses becslés alapján a
+            baloldali fa jobb, mint a jobboldali fa.</p>
+          </li></ol></div>
+
+        <p></p>
+
+        <p><span class="strong"><strong>A modell bonyolultságának
+        beépítése</strong></span></p>
+
+        <p></p>
+
+        <p>Mint már említettük, a modell túlillesztés esélye n&#337;, amint a
+        modell egyre bonyolultabbá válik. Emiatt inkább az egyszer&#369;bb
+        modelleket részesítjük el&#337;nyben. Ez a stratégia a jól ismert <span class="strong"><strong>Occam borotvája</strong></span> (<span class="strong"><strong>Occam’s razor</strong></span>) elv vagy a <span class="strong"><strong>takarékosság elve</strong></span>:</p>
+
+        <div class="orderedlist"><ol class="orderedlist" start="13" type="1"><li class="listitem">
+            <p><span class="strong"><strong>Definíció</strong></span></p>
+          </li></ol></div>
+
+        <p>(Occam borotvája) Két azonos általánosítási hibájú modell közül
+        az egyszer&#369;bb modellt részesítjük el&#337;nyben az összetettebb modellel
+        szemben. Az Occam borotvája egy intuitív elv, mert egy bonyolult
+        modellben a további összetev&#337;k a puszta véletlen miatt nagyobb
+        eséllyel fognak illeszkedni. Einstein szavaival: ,,Tegyünk mindent a
+        lehet&#337; legegyszer&#369;bbé, de nem egyszer&#369;bbé, mint ami valójában’’.
+        Ezután két módszert mutatunk be a modell bonyolultság beépítésére
+        osztályozási modellek kiértékelésénél.</p>
+
+        <p></p>
+
+        <p><span class="strong"><strong>Pesszimista
+        hibabecslés</strong></span></p>
+
+        <p>Az els&#337; megközelítés úgy számolja ki explicit módon az
+        általánosítási hibát, mint a tanítási hiba és egy, a modell
+        bonyolultságát leíró büntet&#337; tag összege. Az így kapott általánosítási
+        hiba annak pesszimista hibabecslésének tekinthet&#337;. Legyen például
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mi>n</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo stretchy="false">)</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+           a 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>t</mml:mi> 
+            </mml:semantics></mml:math>
+           csúcs által osztályozott tanulórekordok száma,
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mi>e</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo stretchy="false">)</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+           pedig a tévesen osztályozott rekordok száma. Egy
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>T</mml:mi> 
+            </mml:semantics></mml:math>
+           döntési fa 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mi>g</mml:mi> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo stretchy="false">)</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+           pesszimista becslési hibáját az alábbiak szerint
+        lehet kiszámítani:</p>
+
+        <p>
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mi>g</mml:mi> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mfrac>
+            <mml:mrow> <mml:msubsup> <mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>&#8721;</mml:mo></mml:mstyle> <mml:mrow>
+            <mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn> </mml:mrow>
+            <mml:mi>k</mml:mi> </mml:msubsup> <mml:mo stretchy="false">[</mml:mo><mml:mi>e</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>t</mml:mi>
+            <mml:mi>i</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>+</mml:mo><mml:mtext>&#937;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>t</mml:mi>
+            <mml:mi>i</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo stretchy="false">]</mml:mo>
+            </mml:mrow> <mml:mrow> <mml:msubsup> <mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>&#8721;</mml:mo></mml:mstyle> <mml:mrow>
+            <mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn> </mml:mrow>
+            <mml:mi>k</mml:mi> </mml:msubsup> <mml:mi>n</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>t</mml:mi>
+            <mml:mi>i</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo>
+            </mml:mrow> </mml:mfrac> <mml:mo>=</mml:mo><mml:mfrac> <mml:mrow>
+            <mml:mi>e</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>+</mml:mo><mml:mtext>&#937;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo stretchy="false">)</mml:mo> </mml:mrow> <mml:mrow> <mml:msub>
+            <mml:mi>N</mml:mi> <mml:mi>t</mml:mi> </mml:msub> </mml:mrow>
+            </mml:mfrac> <mml:mo>,</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+          </p>
+
+        <p>ahol 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>k</mml:mi> 
+            </mml:semantics></mml:math>
+           a levélcsúcsok száma, 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mi>e</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo stretchy="false">)</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+           a döntési fa teljes tanítási hibája,
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>N</mml:mi>
+            <mml:mi>t</mml:mi> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           a tanulórekordok száma, 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#937;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>t</mml:mi>
+            <mml:mi>i</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           pedig az egyes 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>t</mml:mi>
+            <mml:mi>i</mml:mi> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           csúcsokhoz tartozó büntet&#337; tag.</p>
+
+        <div class="orderedlist"><ol class="orderedlist" start="14" type="1"><li class="listitem">
+            <p><span class="strong"><strong>Példa.</strong></span></p>
+          </li></ol></div>
+
+        <p>Tekintsük a 4.27. ábrán látható bináris döntési fákat. Ha a
+        büntet&#337; tag 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mn>0,5</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           -del egyenl&#337;, akkor a baloldali fa pesszimista
+        hibabecslése</p>
+
+        <p>
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mi>g</mml:mi> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>L</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mfrac>
+            <mml:mrow>
+            <mml:mn>4</mml:mn><mml:mo>+</mml:mo><mml:mn>7</mml:mn><mml:mo>×</mml:mo><mml:mn>0,5</mml:mn>
+            </mml:mrow> <mml:mrow> <mml:mn>24</mml:mn> </mml:mrow>
+            </mml:mfrac> <mml:mo>=</mml:mo><mml:mfrac> <mml:mrow>
+            <mml:mn>7,5</mml:mn> </mml:mrow> <mml:mrow> <mml:mn>24</mml:mn>
+            </mml:mrow> </mml:mfrac> <mml:mo>=</mml:mo><mml:mn>0,3125</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+          </p>
+
+        <p>és a jobboldali fa pesszimista hibabecslése</p>
+
+        <p>
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mi>g</mml:mi> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>R</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mfrac>
+            <mml:mrow>
+            <mml:mn>6</mml:mn><mml:mo>+</mml:mo><mml:mn>4</mml:mn><mml:mo>×</mml:mo><mml:mn>0,5</mml:mn>
+            </mml:mrow> <mml:mrow> <mml:mn>24</mml:mn> </mml:mrow>
+            </mml:mfrac> <mml:mo>=</mml:mo><mml:mfrac> <mml:mn>8</mml:mn>
+            <mml:mrow> <mml:mn>24</mml:mn> </mml:mrow> </mml:mfrac>
+            <mml:mo>=</mml:mo><mml:mn>0,3333.</mml:mn> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+          </p>
+
+        <p>Így a baloldali fa pesszimista hibaaránya jobb, mint a
+        jobboldali fáé. A bináris fáknál a 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mn>0,5</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           -es büntet&#337; tag azt jelenti, hogy egy csúcsot
+        mindaddig ki kell terjeszteni a két gyerek csúcsára, amíg legalább egy
+        tanulórekordon javul az osztályozás, mert egy csúcs kiterjesztése,
+        amely 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:mn>0,5</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           -nek a teljes hibához való hozzáadásával
+        egyenérték&#369;, kevésbé költséges, mint egy tanítási hiba
+        elkövetése.</p>
+
+        <p>Ha 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#937;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>1</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           minden 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>t</mml:mi> 
+            </mml:semantics></mml:math>
+           csúcs esetén, akkor a baloldali fa pesszimista
+        hibabecslése 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mi>g</mml:mi> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>L</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>11</mml:mn><mml:mo>/</mml:mo><mml:mn>24</mml:mn><mml:mo>=</mml:mo><mml:mn>0,458</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           , míg a jobboldali fa pesszimista hibabecslése
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mi>g</mml:mi> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>R</mml:mi> </mml:msub> <mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>10</mml:mn><mml:mo>/</mml:mo><mml:mn>24</mml:mn><mml:mo>=</mml:mo><mml:mn>0,417</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           . A jobboldali fa ezért jobb pesszimista
+        hibaaránnyal bír, mint a baloldali fa. Így egy csúcsot nem kell
+        kiterjeszteni a gyerek csúcsaira, kivéve, ha egynél több
+        tanulórekordnál csökken a téves osztályozás hibája.</p>
+
+        <p></p>
+
+        <p><span class="strong"><strong>Legrövidebb leíró hossz
+        elve</strong></span></p>
+
+        <p></p>
+
+        <p>Egy másik mód a modell bonyolultságának figyelembe vételére a
+        legrövidebb leíró hosszon vagy MDL (Minimum Description Length) elven
+        alapuló információelméleti megközelítés. Ezen elv szemléltetésére
+        tekintsük a 4.28. ábrán látható példát. Ebben a példában A és B
+        számára egyaránt rekordok egy halmaza adott, ismert 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>x</mml:mi> 
+            </mml:semantics></mml:math>
+           attribútumértékekkel. Ezen kívül az A személy
+        ismeri minden egyes rekord pontos osztálycímkéjét, míg a B személy nem
+        tudja ezt az információt. B megkaphatja az összes rekord osztályozását
+        úgy, hogy kérésére A szekvenciálisan továbbítja neki az
+        osztálycímkéket. Egy ilyen üzenet 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>&#920;</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>n</mml:mi><mml:mo stretchy="false">)</mml:mo> </mml:mrow> 
+            </mml:semantics></mml:math>
+           bit információt igényel, ahol 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>n</mml:mi> 
+            </mml:semantics></mml:math>
+           a rekordok száma.</p>
+
+        <div class="figure"><a name="idp115322896"></a><p class="title"><b>4.28. ábra - A minimális leíró hossz (MDL) elv</b></p><div class="figure-contents">
+          
+
+          <div class="mediaobject"><img src="./Modell túlillesztés_files/fig3_dtree_mdl.png" alt="A minimális leíró hossz (MDL) elv"></div>
+        </div></div><br class="figure-break">
+
+        <p></p>
+
+        <p>Alternatívaként A dönthet úgy, hogy egy olyan osztályozási
+        modellt épít, amely az 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>x</mml:mi> 
+            </mml:semantics></mml:math>
+           és 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>y</mml:mi> 
+            </mml:semantics></mml:math>
+           közötti kapcsolatot összegzi. A modell a B számára
+        történ&#337; továbbítás el&#337;tt tömör formában kódolható. Ha a modell
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>100</mml:mn><mml:mtext>%</mml:mtext> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+           -osan pontos, akkor az átvitel költsége
+        egyenérték&#369; a modell kódolásának költségével. Egyébként A azt az
+        információt is át kell hogy küldje, hogy mely rekordot sorolta be
+        helytelenül a modell. Így az átvitel teljes költsége</p>
+
+        <p>
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mtext>Költség</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>m</mml:mi><mml:mi>o</mml:mi><mml:mi>d</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo>,</mml:mo><mml:mi>a</mml:mi><mml:mi>d</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mtext>Költség</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>m</mml:mi><mml:mi>o</mml:mi><mml:mi>d</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>+</mml:mo><mml:mtext>Költség</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>a</mml:mi><mml:mi>d</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mo>|</mml:mo><mml:mi>m</mml:mi><mml:mi>o</mml:mi><mml:mi>d</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>,</mml:mo> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+           (4.9)</p>
+
+        <p>ahol a jobb oldalon az els&#337; tag a modell kódolásának költsége,
+        míg a második tag a tévesen címkézett rekordok kódolásának költségét
+        reprezetálja. Az MDL elv szerint egy olyan modellt kellene keresnünk,
+        amely minimalizálja a teljes költségfüggvényt. A 207. oldalon a 9.
+        feladatban található példa bemutatja, hogyan kell kiszámítani egy
+        döntési fa teljes leíró hosszát.</p>
+
+        <p></p>
+
+        <p><span class="strong"><strong>Becsl&#337; statisztikai
+        korlátok</strong></span></p>
+
+        <p></p>
+
+        <p>Az általánosítási hiba a tanítási hiba statisztikai
+        korrekciójaként is becsülhet&#337;. Mivel az általánosítási hiba hajlamos
+        arra, hogy nagyobb legyen, mint a tanítási hiba, a statisztikai
+        korrekciót általában a tanítási hiba fels&#337; korlátjaként számoljuk ki
+        azon tanulórekordok számát figyelembe véve, amelyek egy adott
+        levélcsúcsba kerülnek. A C4.5 döntési fa algoritmus például az egyes
+        levélcsúcsok által elkövetett hibák számáról feltételezi, hogy
+        binomiális eloszlást követ. Az általánosítási hiba kiszámításához a
+        megfigyelt tanítási hiba fels&#337; korlátját kell meghatározni, amint azt
+        a következ&#337; példa szemlélteti.</p>
+
+        <p><span class="strong"><strong>4.3. Példa.</strong></span></p>
+
+        <p>Tekintsük a 4.27. ábrán látható bináris döntési fák bal széls&#337;
+        ágát. Figyeljük meg, hogy 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>R</mml:mi> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           bal széls&#337; levélcsúcsa két gyerek csúccsal b&#337;vült
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>L</mml:mi> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           -ben. Vágás el&#337;tt a csúcs hibaaránya
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>2</mml:mn><mml:mo>/</mml:mo><mml:mn>7</mml:mn><mml:mo>=</mml:mo><mml:mn>0,286</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           . A binomiális eloszlást normális eloszlással
+        közelítve az 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>e</mml:mi> 
+            </mml:semantics></mml:math>
+           hibaarányra a következ&#337; fels&#337; korlátot lehet
+        levezetni:</p>
+
+        <p>
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mrow>
+            <mml:mi>f</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>s</mml:mi><mml:mtext>&#337;</mml:mtext>
+            </mml:mrow> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:mi>N</mml:mi><mml:mo>,</mml:mo><mml:mi>e</mml:mi><mml:mo>,</mml:mo><mml:mi>&#945;</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mfrac>
+            <mml:mrow> <mml:mi>e</mml:mi><mml:mo>+</mml:mo><mml:mfrac>
+            <mml:mrow> <mml:msubsup> <mml:mi>Z</mml:mi> <mml:mrow>
+            <mml:mi>&#945;</mml:mi><mml:mo>/</mml:mo><mml:mn>2</mml:mn> </mml:mrow>
+            <mml:mn>2</mml:mn> </mml:msubsup> </mml:mrow> <mml:mrow>
+            <mml:mn>2</mml:mn><mml:mi>N</mml:mi> </mml:mrow> </mml:mfrac>
+            <mml:mo>+</mml:mo><mml:msub> <mml:mi>Z</mml:mi> <mml:mrow>
+            <mml:mi>&#945;</mml:mi><mml:mo>/</mml:mo><mml:mn>2</mml:mn> </mml:mrow>
+            </mml:msub> <mml:msqrt> <mml:mrow> <mml:mfrac> <mml:mrow>
+            <mml:mi>e</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mn>1</mml:mn><mml:mo>&#8722;</mml:mo><mml:mi>e</mml:mi><mml:mo stretchy="false">)</mml:mo> </mml:mrow> <mml:mi>N</mml:mi>
+            </mml:mfrac> <mml:mo>+</mml:mo><mml:mfrac> <mml:mrow>
+            <mml:msubsup> <mml:mi>Z</mml:mi> <mml:mrow>
+            <mml:mi>&#945;</mml:mi><mml:mo>/</mml:mo><mml:mn>2</mml:mn> </mml:mrow>
+            <mml:mn>2</mml:mn> </mml:msubsup> </mml:mrow> <mml:mrow>
+            <mml:mn>4</mml:mn><mml:msup> <mml:mi>N</mml:mi> <mml:mn>2</mml:mn>
+            </mml:msup> </mml:mrow> </mml:mfrac> </mml:mrow> </mml:msqrt>
+            </mml:mrow> <mml:mrow>
+            <mml:mn>1</mml:mn><mml:mo>+</mml:mo><mml:mfrac> <mml:mrow>
+            <mml:msubsup> <mml:mi>Z</mml:mi> <mml:mrow>
+            <mml:mi>&#945;</mml:mi><mml:mo>/</mml:mo><mml:mn>2</mml:mn> </mml:mrow>
+            <mml:mn>2</mml:mn> </mml:msubsup> </mml:mrow> <mml:mi>N</mml:mi>
+            </mml:mfrac> </mml:mrow> </mml:mfrac> <mml:mo>,</mml:mo>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           (4.10)</p>
+
+        <p>ahol 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>&#945;</mml:mi> 
+            </mml:semantics></mml:math>
+           a megbízhatósági szint, 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>Z</mml:mi>
+            <mml:mrow> <mml:mi>&#945;</mml:mi><mml:mo>/</mml:mo><mml:mn>2</mml:mn>
+            </mml:mrow> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           a standard normális eloszlás 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>&#945;</mml:mi><mml:mo>/</mml:mo><mml:mn>2</mml:mn> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+           kvantilise, 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>N</mml:mi> 
+            </mml:semantics></mml:math>
+           pedig az 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mi>e</mml:mi> 
+            </mml:semantics></mml:math>
+           kiszámításához használt összes tanulórekord száma.
+        Az 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>&#945;</mml:mi><mml:mo>=</mml:mo><mml:mn>25</mml:mn><mml:mtext>%</mml:mtext>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           , 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>N</mml:mi><mml:mo>=</mml:mo><mml:mn>7</mml:mn> </mml:mrow>
+            
+            </mml:semantics></mml:math>
+           és 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>e</mml:mi><mml:mo>=</mml:mo><mml:mn>2</mml:mn><mml:mo>/</mml:mo><mml:mn>7</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           helyettesítéssel a hibaarány fels&#337; korlátja
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mrow>
+            <mml:mi>f</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>s</mml:mi><mml:mtext>&#337;</mml:mtext>
+            </mml:mrow> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:mn>7</mml:mn><mml:mo>;</mml:mo><mml:mn>2</mml:mn><mml:mo>/</mml:mo><mml:mn>7</mml:mn><mml:mo>;</mml:mo><mml:mn>0,25</mml:mn><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>0,503</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           , ami 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>7</mml:mn><mml:mo>×</mml:mo><mml:mn>0,503</mml:mn><mml:mo>=</mml:mo><mml:mn>3,521</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           hibának felel meg. Ha kiterjesztjük a csúcsot a
+        gyerek csúcsaira ahogy 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>L</mml:mi> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           mutatja, akkor a gyerek csúcsok tanítási
+        hibaaránya egyenként 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>1</mml:mn><mml:mo>/</mml:mo><mml:mn>4</mml:mn><mml:mo>=</mml:mo><mml:mn>0,250</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           és 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>1</mml:mn><mml:mo>/</mml:mo><mml:mn>3</mml:mn><mml:mo>=</mml:mo><mml:mn>0,333</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           . (4.10) egyenletet használva ezeknek
+        hibaarányoknak a fels&#337; határai egyenként 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mrow>
+            <mml:mi>f</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>s</mml:mi><mml:mtext>&#337;</mml:mtext>
+            </mml:mrow> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:mn>4</mml:mn><mml:mo>;</mml:mo><mml:mn>1</mml:mn><mml:mo>/</mml:mo><mml:mn>4</mml:mn><mml:mo>;</mml:mo><mml:mn>0,25</mml:mn><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>0,537</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           és 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>e</mml:mi>
+            <mml:mrow>
+            <mml:mi>f</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>s</mml:mi><mml:mtext>&#337;</mml:mtext>
+            </mml:mrow> </mml:msub> <mml:mo stretchy="false">(</mml:mo><mml:mn>3</mml:mn><mml:mo>;</mml:mo><mml:mn>1</mml:mn><mml:mo>/</mml:mo><mml:mn>3</mml:mn><mml:mo>;</mml:mo><mml:mn>0,25</mml:mn><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>0,650</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           . A gyerek csúcsok teljes tanítási hibája így
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mn>4</mml:mn><mml:mo>×</mml:mo><mml:mn>0,537</mml:mn><mml:mo>+</mml:mo><mml:mn>3</mml:mn><mml:mo>×</mml:mo><mml:mn>0,650</mml:mn><mml:mo>=</mml:mo><mml:mn>4,098</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           , ami nagyobb, mint a 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow> <mml:msub> <mml:mi>T</mml:mi>
+            <mml:mi>R</mml:mi> </mml:msub> </mml:mrow> 
+            </mml:semantics></mml:math>
+           -beli megfelel&#337; csúcs becsült hibája.</p>
+
+        <p></p>
+
+        <p><span class="strong"><strong>Validációs halmaz
+        használata</strong></span></p>
+
+        <p></p>
+
+        <p>Ennél a megközelítésnél ahelyett, hogy az általánosítási hiba
+        becslésére a tanulóhalmazt használnánk, az eredeti tanulóadatokat két
+        kisebb részhalmazra bontjuk. Az egyik részhalmazt a tanításra
+        használjuk, míg a másikat, az úgynevezett validációs (érvényesít&#337;)
+        halmazt (validation set), használjuk az általánosítási hiba becslésre.
+        Általában a tanulóhalmaz kétharmadát a modellépítésére tartják fenn,
+        míg a fennmaradó egyharmadot használják hibabecslésre.</p>
+
+        <p>Ezt a megközelítést általában olyan osztályozási módszereknél
+        használják, amelyek úgy paraméterezhet&#337;ek, hogy különböz&#337;
+        bonyolultsági szint&#369; modellek adódnak. A legjobb modell bonyolultsága
+        a tanuló algoritmus paraméterének a módosításával becsülhet&#337; (például
+        egy döntési fa metszési szintje), míg a tanuló algoritmus által kapott
+        empirikus modell a legalacsonyabb hibaarányt el nem éri a validációs
+        halmazon. Bár ez a megközelítés jobb módot ad annak becslésére, hogy
+        mennyire jól teljesít a modell a korábban nem látott rekordokon,
+        kevesebb adat áll rendelkezésre a tanításra.</p>
+
+        <p></p>
+      </div>
+
+      <div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="idp115496256"></a>A túlillesztés kezelése döntési fa következtetésnél</h3></div></div></div>
+        
+
+        <p></p>
+
+        <p>Az el&#337;z&#337; szakaszban számos módszert írtunk le egy osztályozási
+        modell általánosítási hibájának becslésére. Az általánosítási hiba egy
+        megbízható becslése lehet&#337;vé teszi, hogy a tanuló algoritmus egy olyan
+        pontos modellt találjon, amely nincs túlillesztve a tanulóadatokon. Ez
+        a szakasz két stratégiát mutat be a modell túlillesztés elkerülésére
+        döntési fa következtetési környezetben.</p>
+
+        <p></p>
+
+        <p><span class="strong"><strong>El&#337;metszés (prepruning, korai megállási
+        szabály)</strong></span></p>
+
+        <p>Ebben a megközelítésben a faépít&#337; algoritmus megszakad, miel&#337;tt
+        el&#337;állítaná azt a teljesen kifejlett fát, amely tökéletesen
+        illeszkedik a teljes tanulóhalmazra. Ehhez szigorúbb megállási
+        feltételt kell alkalmazni, például meg kell állni egy levélcsúcs
+        b&#337;vítésével, ha a szennyezettségi mértékben megfigyelt nyereség (vagy
+        a becsült általánosítási hibában való javulás) nem ér el egy bizonyos
+        küszöbértéket. Az az el&#337;nye ennek a megközelítésnek, hogy elkerüli
+        olyan túlságosan bonyolult részfák el&#337;állítását, amelyek
+        túlilleszt&#337;dnek a tanulóhalmazon. Mindazonáltal nehéz kiválasztani a
+        megfelel&#337; küszöbértéket a korai leállásra. Túl magas küszöbérték
+        alulillesztett modellt eredményez, míg a túl alacsony küszöbérték nem
+        elegend&#337; ahhoz, hogy úrrá legyünk a modell túlillesztési problémán.
+        Továbbá, még ha nem is kaptunk szignifikáns nyereséget a létez&#337;
+        attribútum tesztfeltételek egyikét használva, egy újabb vágás jobb
+        részfát eredményezhet.</p>
+
+        <p></p>
+
+        <p><span class="strong"><strong>Utómetszés
+        (postpruning)</strong></span></p>
+
+        <p>Ebben a megközelítésben a döntési fát el&#337;ször a maximális
+        méretére növeljük. Ezt egy fametszési lépés követi, amely során a
+        teljesen kifejlett fát alulról felfelé haladóan lenyessük. A nyesést
+        megtehetjük úgy, hogy a részfát helyettesítjük (1) egy olyan új
+        levélcsúccsal, amelynek osztálycímkéjét a részfához tartozó rekordok
+        többségi osztálya határozza meg, vagy (2) a részfa leggyakoribb
+        ágával. A fa-metszést akkor fejezzük be, amikor további javulás már
+        nem figyelhet&#337; meg. Az utómetszés általában jobb eredményt ad, mint az
+        el&#337;metszés, mert a nyesésr&#337;l hozott döntés a teljesen kifejlett fán
+        alapszik, ellentétben az el&#337;metszéssel, amely a faépítési folyamat túl
+        korai megszakításától szenved. Ugyanakkor utómetszésnél a teljes fa
+        felépítéséhez szükséges további számítások hiábavalóak lehetnek,
+        amikor a részfát lemetszük.</p>
+
+        <div class="figure"><a name="idp115502560"></a><p class="title"><b>4.29. ábra - A döntési fa utómetszése web-robot észlelésnél</b></p><div class="figure-contents">
+          
+
+          <div class="mediaobject"><img src="./Modell túlillesztés_files/fig3_dtree_example2d.png" alt="A döntési fa utómetszése web-robot észlelésnél"></div>
+        </div></div><br class="figure-break">
+
+        <p></p>
+
+        <p>A 4.29. ábra az egyszer&#369;sített döntési fa modellt szemlélteti
+        4.3.6. szakaszbeli web-robot észlel&#337; példához. Figyeljük meg, hogy a
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>d</mml:mi><mml:mi>e</mml:mi><mml:mi>p</mml:mi><mml:mi>t</mml:mi><mml:mi>h</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           gyöker&#369; részfa helyébe az ImagePages attribútumot
+        bevonó ágak egyike kerül. Ez a megközelítés <span class="strong"><strong>részfa növelés</strong></span> (<span class="strong"><strong>subtree raising</strong></span>) néven is ismert. A
+        
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>d</mml:mi><mml:mi>e</mml:mi><mml:mi>p</mml:mi><mml:mi>t</mml:mi><mml:mi>h</mml:mi><mml:mo>&#8805;</mml:mo><mml:mn>1</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           és 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>M</mml:mi><mml:mi>u</mml:mi><mml:mi>l</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>A</mml:mi><mml:mi>g</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           részfát pedig egy a 0 osztályhoz rendelt
+        levélcsúcs váltotta fel. Ez a megközelítés az úgynevezett <span class="strong"><strong>részfa csere</strong></span> (<span class="strong"><strong>subtree
+        replacement</strong></span>). A 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>d</mml:mi><mml:mi>e</mml:mi><mml:mi>p</mml:mi><mml:mi>t</mml:mi><mml:mi>h</mml:mi><mml:mo>&#8805;</mml:mo><mml:mn>1</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           és 
+            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:semantics> <mml:mrow>
+            <mml:mi>M</mml:mi><mml:mi>u</mml:mi><mml:mi>l</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>A</mml:mi><mml:mi>g</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn>
+            </mml:mrow> 
+            </mml:semantics></mml:math>
+           részfa érintetlen marad.</p>
+
+        <p></p>
+      </div>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tbody><tr><td width="40%" align="left"><a accesskey="p" href="https://gyires.inf.unideb.hu/KMITT/a04/ch04s03.html">Vissza</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="https://gyires.inf.unideb.hu/KMITT/a04/ch04.html">Fel</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="https://gyires.inf.unideb.hu/KMITT/a04/ch04s05.html">El&#337;re</a></td></tr><tr><td width="40%" align="left" valign="top">Döntési fa következtetés&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="https://gyires.inf.unideb.hu/KMITT/a04/index.html">F&#337;oldal</a></td><td width="40%" align="right" valign="top">&nbsp;Egy osztályozó teljesítményének a kiértékelése</td></tr></tbody></table></div>
+</body></html>
